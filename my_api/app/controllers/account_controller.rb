@@ -60,9 +60,7 @@ class AccountController < ApplicationController
 
     if account_sender.nil? || account_receiver.nil?
       render json: 'Could not find account'
-      return
-    end
-
+  
     transfer = params[:transfer].to_f
 
     validade_transfer(account_sender, account_receiver, transfer)
@@ -97,6 +95,7 @@ class AccountController < ApplicationController
     @transfer = Transfer.new(amount: transfer,
                              sender_id: account_sender.id,
                              recipient_id: account_receiver.id)
+                             
     @transfer.save
   end
 end
