@@ -1,0 +1,27 @@
+Projeto conta bancária - API - REST
+
+- Criar conta
+- Deletar conta (Soft Delet?)
+- Fazer Transferências (Somente nas contas do mesmo usuário)
+- Saques
+- Transferência
+
+
+Models
+- Usuário
+  * id
+  * Nome
+  * Email
+  * CPF
+  * has many: Conta
+- Conta
+  * Numero
+  * Saldo
+  * has many: Saques, Transferências
+- Saques
+  * Quantidade
+- Transferências
+  * Quantidade
+  * Conta destino/origem
+
+*** Todos possuem timestamp
