@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  get 'users/:id' => 'user#show'
   post 'user' => 'user#create'
+  post 'user/view' => 'user#view'
+  post 'user/update' => 'user#update'
+  post 'user/destroy' => 'user#destroy'
+
   post 'account' => 'account#create'
+  post 'account/view' => 'account#view'
+  post 'account/destroy' => 'account#destroy'
+  post 'account/withdraw' => 'account#withdraw'
+  post 'account/deposit' => 'account#deposit'
+  post 'account/transfer' => 'account#transfer'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -5,4 +5,14 @@ class Account < ActiveRecord::Base
   has_many :withdraws, dependent: :destroy
 
   validates :number, presence: true, uniqueness: { case_sensitive: false }
+
+  def withdraw!(amount)
+    return false if (self.balance - amount).negative?
+
+    self.balance -= amount
+  end
+
+  def deposit!(amount)
+    self.balance += amount
+  end
 end
