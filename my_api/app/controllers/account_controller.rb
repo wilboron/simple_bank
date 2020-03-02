@@ -12,17 +12,12 @@ class AccountController < ApplicationController
 
   def withdraw
     account = Account.find_by(number: params[:number])
-  
-    if account.nil?
-      render json: 'Could not find account'
-      return
-    end
+
+    render json: 'Could not find account' if account.nil?
 
     withdraw_amount = params[:amount].to_f
 
-    if account.withdraw!(withdraw_amount)
-      account.save
-      account.withdraws.create(amount: withdraw_amount)
+    if account.withdraw(withdraw_amount)
       render json: account
     else
       render json: "You don't have the required balance for this withdrawl.
@@ -39,9 +34,7 @@ class AccountController < ApplicationController
     end
 
     deposit_amount = params[:amount].to_f
-
-    account.deposit!(deposit_amount)
-    account.save
+    account.deposit(deposit_amount)
     render json: account
   end
 
@@ -90,7 +83,7 @@ class AccountController < ApplicationController
     end
 
     if account_sender.user_id != account_receiver.user_id
-      render json: "Cannot transfer from a different user"
+      render json: 'Cannot transfer from a different user'
     end
   end
 
