@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(version: 20200302131406) do
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
 
   create_table "transfers", force: :cascade do |t|
-    t.string   "amount"
-    t.integer  "sender_id"
-    t.integer  "recipient_id"
+    t.float    "amount"
+    t.string   "sender_id"
+    t.string   "recipient_id"
     t.integer  "account_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

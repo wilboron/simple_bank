@@ -55,47 +55,30 @@ class AccountController < ApplicationController
   end
 
   def transfer
-    account_receiver = Account.find_by(number: params[:receiver_id])
-    account_sender = Account.find_by(number: params[:sender_id])
+    transfer = Transfer.new(amount: params[:transfer].to_f,
+                            sender_id: params[:sender_id],
+                            recipient_id: params[:receiver_id])
 
-    if account_sender.nil? || account_receiver.nil?
-      render json: 'Could not find account'
-  
-    transfer = params[:transfer].to_f
-
-    validade_transfer(account_sender, account_receiver, transfer)
-    commit_transfer(account_sender, account_receiver, transfer)
-
-    render json: [sender: [account_sender,
-                  sent_transfers: account_sender.sent_transfers,
-                  received_transfers: account_sender.received_transfers],
-                  receiver: [account_receiver,
-                  sent_transfers: account_receiver.sent_transfers,
-                  received_transfers: account_receiver.received_transfers]]
-  end
-
-  def validade_transfer(account_sender, account_receiver, transfer)
-    if (account_sender.balance - transfer).negative?
-      render json: "Sender does not have the required amount.
-      Sender balance: #{account_sender.balance} Transfer: #{transfer}"
+    begin
+      account_receiver, account_sender = transfer.commit
+    rescue => e
+      render json: e.message
+      return
     end
-
-    if account_sender.user_id != account_receiver.user_id
-      render json: 'Cannot transfer from a different user'
-    end
+    render json: make_array_transfer(account_receiver, account_sender)
   end
 
-  def commit_transfer(account_sender, account_receiver, transfer)
-    account_receiver.balance += transfer
-    account_sender.balance -= transfer
 
-    account_receiver.save
-    account_sender.save
+  private
 
-    @transfer = Transfer.new(amount: transfer,
-                             sender_id: account_sender.id,
-                             recipient_id: account_receiver.id)
-                             
-    @transfer.save
+  def make_array_transfer(account_receiver, account_sender)
+    [sender:
+    [account_sender,
+     sent_transfers: account_sender.sent_transfers,
+     received_transfers: account_sender.received_transfers],
+     receiver: [account_receiver,
+                sent_transfers: account_receiver.sent_transfers,
+                received_transfers: account_receiver.received_transfers]]
   end
+
 end
