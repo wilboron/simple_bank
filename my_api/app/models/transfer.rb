@@ -13,8 +13,8 @@ class Transfer < ActiveRecord::Base
     end
   end
 
-  def commit
-    retrieve_accounts
+  def commit(sender_id, recipient_id)
+    retrieve_accounts(sender_id, recipient_id)
     validade_transfer
 
     @account_receiver.balance += amount
@@ -31,9 +31,12 @@ class Transfer < ActiveRecord::Base
 
   private
 
-  def retrieve_accounts
+  def retrieve_accounts(sender_id, recipient_id)
     @account_receiver = Account.find_by(number: recipient_id)
     @account_sender = Account.find_by(number: sender_id)
+    # Needs to update to account id not account number
+    self.recipient_id = @account_receiver.id
+    self.sender_id = @account_sender.id
 
     if @account_sender.nil? || @account_receiver.nil?
       raise 'Could not find account'

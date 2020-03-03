@@ -55,12 +55,11 @@ class AccountController < ApplicationController
   end
 
   def transfer
-    transfer = Transfer.new(amount: params[:transfer].to_f,
-                            sender_id: params[:sender_id],
-                            recipient_id: params[:receiver_id])
-
+    transfer = Transfer.new(amount: params[:transfer].to_f)
     begin
-      account_receiver, account_sender = transfer.commit
+      account_receiver, account_sender = transfer.commit(
+                                      params[:sender_id],
+                                      params[:receiver_id])
     rescue => e
       render json: e.message
       return

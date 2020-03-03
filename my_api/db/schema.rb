@@ -25,14 +25,12 @@ ActiveRecord::Schema.define(version: 20200302131406) do
 
   create_table "transfers", force: :cascade do |t|
     t.float    "amount"
-    t.string   "sender_id"
-    t.string   "recipient_id"
-    t.integer  "account_id"
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
-  add_index "transfers", ["account_id"], name: "index_transfers_on_account_id"
   add_index "transfers", ["recipient_id"], name: "index_transfers_on_recipient_id"
   add_index "transfers", ["sender_id"], name: "index_transfers_on_sender_id"
 

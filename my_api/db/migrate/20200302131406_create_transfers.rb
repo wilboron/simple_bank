@@ -3,11 +3,8 @@ class CreateTransfers < ActiveRecord::Migration
     create_table :transfers do |t|
       t.float :amount
 
-      t.string :sender_id
-      t.string :recipient_id
-
-      t.references :account, index: true, foreign_key: true
-      t.references :account, index: true, foreign_key: true
+      t.integer :sender_id
+      t.integer :recipient_id
 
       t.timestamps null: false
     end
