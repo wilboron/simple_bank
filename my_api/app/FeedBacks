@@ -1,0 +1,5 @@
+FeedBacks:
+- Fazer métodos retornar só um tipo de valor.
+- Mudar commit transfer, não é a responsabilidade do controller saber
+a lógica do negócio.
+

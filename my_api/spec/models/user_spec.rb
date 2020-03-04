@@ -25,6 +25,11 @@ describe User do
     subject.cpf = nil
     expect(subject).to_not be_valid
   end
+
+  it 'is not valid when the cpf is string' do
+    subject.cpf = 'value'
+    expect(subject).to_not be_valid
+  end
 end
 
 describe User do

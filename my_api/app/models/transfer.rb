@@ -2,6 +2,8 @@ class Transfer < ActiveRecord::Base
   belongs_to :sender, class_name: 'Account', foreign_key: 'sender_id'
   belongs_to :recipient, class_name: 'Account', foreign_key: 'recipient_id'
 
+  validates :amount, numericality: { greater_than: 0 }
+
   def validade_transfer
     if (@account_sender.balance - amount).negative?
       raise "Sender: #{@account_sender.user.name} does not have the required amount.
@@ -25,7 +27,6 @@ class Transfer < ActiveRecord::Base
         @account_sender.save!
         save!
     end
-
     [@account_receiver, @account_sender]
   end
 

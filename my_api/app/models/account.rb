@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
     return false if (balance - amount).negative?
 
     self.balance -= amount
-    return false unless withdraws.create(amount: withdraw_amount)
+    return false unless withdraws.create(amount: amount)
 
     save
   end
