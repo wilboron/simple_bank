@@ -6,8 +6,18 @@ describe Account do
     expect(acc).to_not be_valid
   end
 
-  it 'is invalid when contains number and is alpha' do
+  it 'is invalid when number is alpha' do
     acc = Account.new(number: 'a')
+    expect(acc).to_not be_valid
+  end
+
+  it 'is invalid when balance is alpha' do
+    acc = Account.new(number: '00000', balance: 'a')
+    expect(acc).to_not be_valid
+  end
+
+  it 'is invalid when balance is negative' do
+    acc = Account.new(number: '00000', balance: -1)
     expect(acc).to_not be_valid
   end
 end
