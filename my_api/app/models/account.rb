@@ -4,7 +4,8 @@ class Account < ActiveRecord::Base
   has_many :received_transfers, class_name: 'Transfer', foreign_key: 'recipient_id'
   has_many :withdraws, dependent: :destroy
 
-  validates :number, presence: true, uniqueness: { case_sensitive: false }
+  validates :number, presence: true, uniqueness: true,
+             numericality: { only_integer: true }
 
   def withdraw(amount)
     return false if (balance - amount).negative?
