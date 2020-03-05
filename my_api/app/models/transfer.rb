@@ -39,7 +39,7 @@ class Transfer < ActiveRecord::Base
     if @account_sender.nil? || @account_receiver.nil?
       raise 'Could not find account'
     end
-    
+
     # Needs to update to account id not account number
     self.recipient_id = @account_receiver.id
     self.sender_id = @account_sender.id
