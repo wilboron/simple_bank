@@ -6,7 +6,7 @@ class Account < ActiveRecord::Base
 
   validates :number, presence: true, uniqueness: true,
              numericality: { only_integer: true }
-  validates :balance, numericality: { greater_than: 0 }
+  validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
   def withdraw(amount)
     return false if (balance - amount).negative?

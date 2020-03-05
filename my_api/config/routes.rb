@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   post 'account' => 'account#create'
   post 'account/view' => 'account#view'
+  post 'account/update' => 'account#update'
   post 'account/destroy' => 'account#destroy'
   post 'account/withdraw' => 'account#withdraw'
   post 'account/deposit' => 'account#deposit'
